@@ -49,11 +49,9 @@ func (connection *Connection) GetConnection() *sql.DB {
 func (connection *Connection) Initialize(username, password, dbname string) (*sql.DB, error) {
 	var err error
 	dataSourceName := fmt.Sprintf("user=%s password=%s database=%s", username, password, dbname)
-	fmt.Println(dataSourceName)
 	connection.DB, err = sql.Open("postgres", dataSourceName)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(connection.DB)
 	return connection.DB, err
 }

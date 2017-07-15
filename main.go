@@ -7,9 +7,15 @@ import (
 	"sklrsn.github.com/Robot/store"
 )
 
+var (
+	USERNAME = "postgres"
+	PASSWORD = "love"
+	DATABASE = "postgres"
+)
+
 func main() {
 	connection := store.Connection{}
-	connection.Initialize("postgres", "love", "postgres")
+	connection.Initialize(USERNAME, PASSWORD, DATABASE)
 
 	product := store.Product{Name: "Bat", Price: 27}
 	fmt.Println(store.Persist(&product, &connection))
