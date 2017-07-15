@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	store "sklrsn.github.com/Robot/store"
+	"sklrsn.github.com/Robot/store"
 )
 
 func main() {
