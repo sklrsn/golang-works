@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+
 	_ "github.com/lib/pq"
 	"sklrsn.github.com/Robot/store"
 )
@@ -10,5 +12,5 @@ func main() {
 	connection.Initialize("postgres", "love", "postgres")
 
 	product := store.Product{Name: "Bat", Price: 27}
-	store.Persist(&product, &connection)
+	fmt.Println(store.Persist(&product, &connection))
 }

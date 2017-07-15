@@ -29,15 +29,15 @@ type Connection struct {
 }
 
 //Persist - Store Product attributes in Database
-func Persist(product *Product, connection *Connection) bool {
-	success := true
+func Persist(product *Product, connection *Connection) int {
 	var err error
-	_, err = connection.DB.Exec("INSERT INTO products(name,price) VALUES($1,$2) RETURNING id", product.Name, product.Price)
+	sqlStatement := `INSERT INTO products(name,price) VALUES($1,$2) RETURNING id`
+	id := 0
+	err = connection.DB.QueryRow(sqlStatement, product.Name, product.Price).Scan(&id)
 	if err != nil {
-		fmt.Println("Insert data failed")
-		success = false
+		panic("Insert data failed")
 	}
-	return success
+	return id
 }
 
 //GetConnection - Get a Database Connection
