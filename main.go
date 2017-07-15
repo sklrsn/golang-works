@@ -7,6 +7,6 @@ import (
 )
 
 func main() {
-	msg := store.sayHello()
+	msg := store.SayHello()
 	fmt.Println(msg)
 }
