@@ -1,11 +1,11 @@
 Image:=sklrsn/robot
 
-all: tests build 
+all: tests build run
 
 build:
 			sudo docker build -t $(Image) .
 tests:
 		go test
 
-up:
+run:
 	 sudo docker run $(Image)
