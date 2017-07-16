@@ -1,0 +1,5 @@
+title = "Server Configuration"
+[database]
+username = "postgres"
+password="love"
+database="postgres"
