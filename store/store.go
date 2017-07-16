@@ -35,6 +35,7 @@ func Persist(product *Product, connection *Connection) int {
 	id := 0
 	err = connection.DB.QueryRow(sqlStatement, product.Name, product.Price).Scan(&id)
 	if err != nil {
+		fmt.Println(err.Error())
 		panic("Insert data failed")
 	}
 	return id
@@ -46,9 +47,9 @@ func (connection *Connection) GetConnection() *sql.DB {
 }
 
 //Initialize - Create Database Connection
-func (connection *Connection) Initialize(username, password, dbname string) (*sql.DB, error) {
+func (connection *Connection) Initialize(host, port, username, password, dbname string) (*sql.DB, error) {
 	var err error
-	dataSourceName := fmt.Sprintf("user=%s password=%s database=%s", username, password, dbname)
+	dataSourceName := fmt.Sprintf("host=%s port=%s user=%s password=%s database=%s", host, port, username, password, dbname)
 	connection.DB, err = sql.Open("postgres", dataSourceName)
 	if err != nil {
 		log.Fatal(err)
