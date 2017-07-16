@@ -3,6 +3,8 @@ package store
 import (
 	"database/sql"
 	"fmt"
+
+	"github.com/twinj/uuid"
 )
 
 //SayHello - Just for Checking
@@ -17,7 +19,7 @@ func Sum(a, b int) int {
 
 //Product - Holds Product Attributes
 type Product struct {
-	ID    int
+	ID    string
 	Name  string
 	Price float64
 }
@@ -28,11 +30,11 @@ type Connection struct {
 }
 
 //Persist - Store Product attributes in Database
-func Persist(product *Product, connection *Connection) int {
+func Persist(product *Product, connection *Connection) string {
 	var err error
-	sqlStatement := `INSERT INTO products(name,price) VALUES($1,$2) RETURNING id`
-	id := 0
-	err = connection.DB.QueryRow(sqlStatement, product.Name, product.Price).Scan(&id)
+	sqlStatement := `INSERT INTO products(id,name,price) VALUES($1,$2,$3) RETURNING id`
+	id := ""
+	err = connection.DB.QueryRow(sqlStatement, uuid.NewV4(), product.Name, product.Price).Scan(&id)
 	if err != nil {
 		fmt.Println(err.Error())
 		panic("Insert data failed")

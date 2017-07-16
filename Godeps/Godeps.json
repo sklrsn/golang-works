@@ -27,6 +27,11 @@
 			"ImportPath": "github.com/naoina/toml/ast",
 			"Comment": "v0.1.1",
 			"Rev": "e6f5723bf2a66af014955e0888881314cf294129"
+		},
+		{
+			"ImportPath": "github.com/twinj/uuid",
+			"Comment": "v0.1.0",
+			"Rev": "7bbe408d339787c56ec15568c947c0959db1b275"
 		}
 	]
 }
