@@ -40,7 +40,6 @@ func main() {
 
 	connection := store.Connection{}
 	connection.Initialize(string(config.Database.Host), string(config.Database.Port), string(config.Database.Username), string(config.Database.Password), string(config.Database.Database))
-	//connection.Initialize(HOST, PORT, USERNAME, PASSWORD, DATABASE)
 
 	product := store.Product{Name: "Bat", Price: 270}
 	fmt.Println(store.Persist(&product, &connection))
