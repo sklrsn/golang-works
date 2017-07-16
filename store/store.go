@@ -3,7 +3,6 @@ package store
 import (
 	"database/sql"
 	"fmt"
-	"log"
 )
 
 //SayHello - Just for Checking
@@ -52,7 +51,11 @@ func (connection *Connection) Initialize(host, port, username, password, dbname 
 	dataSourceName := fmt.Sprintf("host=%s port=%s user=%s password=%s database=%s", host, port, username, password, dbname)
 	connection.DB, err = sql.Open("postgres", dataSourceName)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
+	}
+	err = connection.DB.Ping()
+	if err != nil {
+		panic(err)
 	}
 	return connection.DB, err
 }

@@ -2,22 +2,23 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	_ "github.com/lib/pq"
+	"github.com/naoina/toml"
 	"sklrsn.github.com/Robot/store"
 )
 
 var (
-	HOST     = "172.17.0.1"
-	PORT     = "5432"
-	USERNAME = "postgres"
-	PASSWORD = "love"
-	DATABASE = "postgres"
+	path = "/usr/local/go/src/sklrsn.github.com/Robot/"
 )
 
-type Config struct {
+//ApplicationConfig - Store Postgres Connection
+type ApplicationConfig struct {
 	Title    string `toml:"title"`
 	Database struct {
+		Host     string `toml:"host"`
+		Port     string `toml:"port"`
 		Username string `toml:"username"`
 		Password string `toml:"password"`
 		Database string `toml:"database"`
@@ -25,22 +26,23 @@ type Config struct {
 }
 
 func main() {
-	// file, err := os.Open("server-config.toml")
-	// if err != nil {
-	// 	panic(err)
-	// }
-	// defer file.Close()
-	//
-	// var config Config
-	// if err := toml.NewDecoder(file).Decode(&config); err != nil {
-	// 	panic(err)
-	// }
+	file, err := os.Open(path + "server-config.toml")
+	if err != nil {
+		fmt.Println(err.Error())
+		panic(err.Error())
+	}
+	defer file.Close()
+
+	var config ApplicationConfig
+	if err := toml.NewDecoder(file).Decode(&config); err != nil {
+		panic(err)
+	}
 
 	connection := store.Connection{}
-	// connection.Initialize(string(config.Database.Username), string(config.Database.Password), string(config.Database.Database))
-	connection.Initialize(HOST, PORT, USERNAME, PASSWORD, DATABASE)
+	connection.Initialize(string(config.Database.Host), string(config.Database.Port), string(config.Database.Username), string(config.Database.Password), string(config.Database.Database))
+	//connection.Initialize(HOST, PORT, USERNAME, PASSWORD, DATABASE)
 
-	product := store.Product{Name: "Bat", Price: 27}
+	product := store.Product{Name: "Bat", Price: 270}
 	fmt.Println(store.Persist(&product, &connection))
 
 }
